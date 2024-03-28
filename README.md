@@ -73,28 +73,33 @@ python main.py
 | Rate | `;с<rate, {1,2,3,4,5}> <text> с;` | `;с4 Привет, мир! с;` |
 | Pitch | `;т<pitch, {1,2,3,4,5}> <text> т;` | `;т4 Привет, мир! т;` |
 
-
 All up-to-dated SSML-shortcuts can be found in [ssml.py](/util/ssml.py)
+
+### Supported languages
+
+* Russian[^1]
+
+[^1]: Officially, only Russian, but you can modify code to support other languages. PRs are welcome!
 
 ## Requirements
 
-OS: Windows 10
+* OS: Windows 10
 
-Python: 3.12[^1]
+* Python: 3.12[^2]
 
-[^1]: Tested on Python 3.12.2, but should work on 3.10+
+[^2]: Tested on Python 3.12.2, but should work on 3.10+
 
 ## Dependencies
 
-[VB-Cable Virtual Audio Device](https://vb-audio.com/Cable/)
+* [VB-Cable Virtual Audio Device](https://vb-audio.com/Cable/)
 
-[ffmpeg](https://ffmpeg.org/)
+* [ffmpeg](https://ffmpeg.org/)
 
-[VS BuildsTools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
+* [VS BuildsTools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 
-[PyTorch](https://pytorch.org/)
+* [PyTorch](https://pytorch.org/)
 
-Other dependencies are in [pyproject.toml](/pyproject.toml)
+* Other dependencies are in [pyproject.toml](/pyproject.toml)
 
 ## Projects that uses repository
 | Source | Description |
