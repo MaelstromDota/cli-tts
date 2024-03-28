@@ -64,6 +64,17 @@ python main.py
 
 ## Features
 
+### Commands
+
+| Command | Syntax | Example |
+| --- | --- | --- |
+| Speaker | `.s <speaker>` | `.s xenia` |
+| Pitch | `.p <pitch>` | `.p 90` |
+| Volume | `.v <volume>` | `.v -5` |
+| Bind mode | `.b <{0,1}>` | `.b 1` |
+
+All up-to-dated commands can be found in [main.py](/main.py)
+
 ### SSML-shortcuts
 
 | Name | Syntax | Example |
@@ -75,19 +86,26 @@ python main.py
 
 All up-to-dated SSML-shortcuts can be found in [ssml.py](/util/ssml.py)
 
-### Supported languages
+### Supported languages and speakers
 
-* Russian[^1]
+* Russian[^1][^2]
+* - aidar
+* - baya
+* - kseniya
+* - xenia
+* - eugene
 
 [^1]: Officially, only Russian, but you can modify code to support other languages. PRs are welcome!
+
+[^2]: Full list of supported speakers can be found in [silero-models](https://github.com/snakers4/silero-models/?tab=readme-ov-file#models-and-speakers) repository (currently using v3_1_ru model, [here is why](https://github.com/snakers4/silero-models/issues/250))
 
 ## Requirements
 
 * OS: Windows 10
 
-* Python: 3.12[^2]
+* Python: 3.12[^3]
 
-[^2]: Tested on Python 3.12.2, but should work on 3.10+
+[^3]: Tested on Python 3.12.2, but should work on 3.10+
 
 ## Dependencies
 
