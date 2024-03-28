@@ -80,7 +80,7 @@ All up-to-dated SSML-shortcuts can be found in [ssml.py](/util/ssml.py)
 OS: Windows 10
 Python: 3.12[^1]
 
-[^1] Tested on Python 3.12.2, but should work on 3.10+
+[^1]: Tested on Python 3.12.2, but should work on 3.10+
 
 ## Dependencies
 [VB-Cable Virtual Audio Device](https://vb-audio.com/Cable/)
