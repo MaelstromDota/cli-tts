@@ -2,6 +2,7 @@ import re
 from typing import TypedDict, NewType
 
 from lxml import etree
+from num2words import num2words
 
 
 SSMLCaptureGroup = NewType("SSMLCaptureGroup", str)
@@ -101,9 +102,20 @@ class SSMLBuilder:
 					if group_num in tag["dictionary"]:
 						group = tag["dictionary"][group_num].get(group)
 					result = result[:group_match.start()] + group + result[group_match.end():]
-				processed_text = processed_text[:match.start()] + " " + result + " " + processed_text[match.end():]
+				processed_text = f"{processed_text[:match.start()]} {result} {processed_text[match.end():]}"
 		return f"<speak> {processed_text} </speak>"
 
 	@staticmethod
 	def extract_only_text(ssml_text: str) -> str:
 		return "".join(etree.fromstring(ssml_text).itertext()).strip()
+
+	@staticmethod
+	def format_numbers(ssml_text: str | etree.ElementBase, language: str="ru") -> str:
+		xml = etree.fromstring(ssml_text) if isinstance(ssml_text, str) else ssml_text
+		if xml.text is not None:
+			xml.text = re.sub(r"\d+", lambda match: num2words(int(match.group()), lang=language), xml.text)
+		for child in xml.iterchildren():
+			SSMLBuilder.format_numbers(child, language=language)
+		if xml.tail is not None:
+			xml.tail = re.sub(r"\d+", lambda match: num2words(int(match.group()), lang=language), xml.tail)
+		return etree.tostring(xml, encoding="utf-8").decode("utf-8") if isinstance(ssml_text, str) else xml

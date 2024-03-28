@@ -2,10 +2,12 @@ import io
 import logging
 import os
 import re
+import traceback
+import sys
+from typing import TextIO
 
 import keyboard
 import simpleaudio as sa
-from num2words import num2words
 
 logging.disable()
 
@@ -40,8 +42,8 @@ player = Player(interrupt_key=play_interrupt_key, virtual_cable=virtual_cable)
 
 
 def prepare_audio(text: str) -> io.BytesIO:
-	formatted_text = re.sub(r"\d+", lambda match: num2words(int(match.group()), lang="ru"), text)
-	formatted_text = ssml_builder.build(formatted_text + ";п500мс3п;")
+	formatted_text = ssml_builder.build(f"{text} ;п500мс3п;")
+	formatted_text = ssml_builder.format_numbers(formatted_text)
 	formatted_text = accentizer.process_all_ssml(formatted_text)
 
 	audio = tts.create_audio(ssml_text=formatted_text, speaker=speaker)
@@ -78,6 +80,14 @@ def say_bind(text: str) -> bool:
 		play_sound(audio_ready_sound)
 	return played_audio
 
+def print_exception(exc, /, value=traceback._sentinel, tb=traceback._sentinel, limit=None, file: TextIO=sys.stderr, chain=True) -> str:
+	value, tb = traceback._parse_value_tb(exc, value, tb)
+	info = ""
+	for line in traceback.TracebackException(type(value), value, tb, limit=limit, compact=True).format(chain=chain):
+		print(line, file=file, end="")
+		info += line
+	return info
+
 logging.disable(logging.ERROR)
 
 os.system("cls")
@@ -102,8 +112,5 @@ while True:
 				say_bind(txt)
 			else:
 				say(txt)
-		except Exception as e:
-			if e.args:
-				print(repr(e), e.args[0])
-			else:
-				print(repr(e))
+		except Exception:
+			print_exception(*sys.exc_info())
