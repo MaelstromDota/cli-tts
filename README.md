@@ -62,6 +62,20 @@ run `main.py`
 python main.py
 ```
 
+## Features
+
+### SSML-shortcuts
+
+| Name | Syntax | Example |
+| --- | --- | --- |
+| Pause | `;п<duration>[units, {с|мс}, с][strength, {1|2|3|4|5}, 3]п;` | `Привет ;п1п; мир!` |
+| Prosody | ;и<rate, {1|2|3|4|5}><pitch, {1|2|3|4|5}> <text> и; | `;и44 Привет, мир! и;` |
+| Rate | ;с<rate, {1|2|3|4|5}> <text> с; | `;с4 Привет, мир! с;` |
+| Pitch | ;т<pitch, {1|2|3|4|5}> <text> т; | `;т4 Привет, мир! т;` |
+
+
+All up-to-dated SSML-shortcuts can be found in [ssml.py](/util/ssml.py)
+
 ## Requirements
 OS: Windows 10
 Python: 3.12[^1]
