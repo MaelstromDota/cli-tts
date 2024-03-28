@@ -1,0 +1,5 @@
+line-length = 200
+
+[per-file-ignores]
+"main.py" = ["E402", "F405"]
+"util/player.py" = ["E402"]
