@@ -77,16 +77,23 @@ python main.py
 All up-to-dated SSML-shortcuts can be found in [ssml.py](/util/ssml.py)
 
 ## Requirements
+
 OS: Windows 10
+
 Python: 3.12[^1]
 
 [^1]: Tested on Python 3.12.2, but should work on 3.10+
 
 ## Dependencies
+
 [VB-Cable Virtual Audio Device](https://vb-audio.com/Cable/)
+
 [ffmpeg](https://ffmpeg.org/)
+
 [VS BuildsTools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
+
 [PyTorch](https://pytorch.org/)
+
 Other dependencies are in [pyproject.toml](/pyproject.toml)
 
 ## Projects that uses repository
