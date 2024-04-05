@@ -16,7 +16,7 @@ from util import VoiceMod, RUAccentModified, SSMLBuilder, TTS, Player
 device = "cuda"
 threads = 4
 
-accentizer_model = "turbo"
+accentizer_model = "big_poetry"
 
 speaker = "baya"
 volume = -15

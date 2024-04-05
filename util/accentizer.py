@@ -1,4 +1,5 @@
 import re
+import os
 
 import ruaccent
 
@@ -84,6 +85,9 @@ class RUAccentModified(ruaccent.RUAccent):
 	def process_all_ssml(self, ssml_text: str) -> str:
 		processed_text = self.process_all(SSMLBuilder.extract_only_text(ssml_text))
 		processed_words = [word for word in self.split_by_words(processed_text) if RUAccentModified.has_word_accent(word)]
+
+		if os.getenv("DEBUG", "0") == "1":
+			print(f"[DEBUG]: {' '.join(processed_words)}")
 
 		result = ssml_text
 		for word in processed_words:
