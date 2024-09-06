@@ -31,10 +31,10 @@ class TTS():
 	def create_audio(self, ssml_text: str, speaker: str) -> io.BytesIO:
 		...
 
-	def create_audio(self, text: str | None=None, ssml_text: str | None=None, speaker: str=None) -> io.BytesIO:
+	def create_audio(self, text: str | None=None, ssml_text: str | None=None, speaker: str="") -> io.BytesIO:
 		if text is None and ssml_text is None:
 			raise ValueError("text or ssml_text must be specified")
-		if speaker is None:
+		if not speaker:
 			raise ValueError("speaker must be specified")
 		if ssml_text is not None:
 			return self.apply_tts(ssml_text=ssml_text, speaker=speaker, sample_rate=48000, put_accent=True, put_yo=True)

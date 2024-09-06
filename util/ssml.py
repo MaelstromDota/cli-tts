@@ -1,17 +1,14 @@
 import re
-from typing import TypedDict, NewType
+from typing import TypedDict
 
 from lxml import etree
 from num2words import num2words
 
 
-SSMLCaptureGroup = NewType("SSMLCaptureGroup", str)
-
-
 class SSMLTag(TypedDict):
 	regex: str
-	dictionary: dict[SSMLCaptureGroup, str]
-	default_values: dict[SSMLCaptureGroup, str]
+	dictionary: dict[str, dict[str, str]]
+	default_values: dict[str, str]
 	result: str
 	syntax: str
 
@@ -101,6 +98,8 @@ class SSMLBuilder:
 						group = tag["default_values"][group_num]
 					if group_num in tag["dictionary"]:
 						group = tag["dictionary"][group_num].get(group)
+					if group is None:
+						continue
 					result = result[:group_match.start()] + group + result[group_match.end():]
 				processed_text = f"{processed_text[:match.start()]} {result} {processed_text[match.end():]}"
 		return f"<speak> {processed_text} </speak>"

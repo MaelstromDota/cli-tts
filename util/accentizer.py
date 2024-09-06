@@ -2,6 +2,7 @@ import re
 import os
 
 import ruaccent
+from ruaccent.text_preprocessor import TextPreprocessor
 
 from .ssml import SSMLBuilder
 
@@ -9,13 +10,9 @@ from .ssml import SSMLBuilder
 class RUAccentModified(ruaccent.RUAccent):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.normalize = re.compile(r"[^a-zA-Z0-9\sа-яА-ЯёЁ.,!?:;""''(){}[]«»„“”-+]") # NOTE: added +
+		self.normalize = re.compile(r"[^a-zA-Z0-9\sа-яА-ЯёЁ—.,!?:;""''(){}[]«»„“”-+]") # NOTE: added +
 
-	@staticmethod
-	def has_word_accent(word: str) -> bool:
-		return re.search(r"\+([аеёиоуыэюя])", word, re.IGNORECASE) is not None
-
-	def _process_omographs(self, text, sentence):
+	def _process_omographs(self, text):
 		splitted_text = text
 
 		founded_omographs = []
@@ -23,7 +20,7 @@ class RUAccentModified(ruaccent.RUAccent):
 		hypotheses = []
 
 		for i, word in enumerate(splitted_text):
-			if type(self).has_word_accent(word):
+			if "+" in word:
 				continue
 			variants = self.omographs.get(word)
 			if variants:
@@ -49,30 +46,13 @@ class RUAccentModified(ruaccent.RUAccent):
 			cls_index = 0
 			for omograph in founded_omographs:
 				position = omograph["position"]
-				#print(splitted_text)
-				#print(cls_batch)
-				#print(cls_index)
 				splitted_text[position] = cls_batch[cls_index]
 				cls_index += 1
 
 		return splitted_text
 
-	def _process_accent(self, text, stress_usages):
-		splitted_text = text
-
-		for i, word in enumerate(splitted_text):
-			if stress_usages[i] == "STRESS":
-				if type(self).has_word_accent(word):
-					continue
-				stressed_word = self.accents.get(word, word)
-				if stressed_word == word and not self.has_punctuation(word) and self.count_vowels(word) > 1:
-					splitted_text[i] = self.accent_model.put_accent(word)
-				else:
-					splitted_text[i] = stressed_word
-		return splitted_text
-
 	@staticmethod
-	def _search_processed_word_in_ssml(word: str, ssml_text: str) -> str | None:
+	def _search_processed_word_in_ssml(word: str, ssml_text: str) -> re.Match[str] | None:
 		word = re.escape(word)
 		formatted_word = word.replace("\\+", "")
 		if match := re.search(rf"\b{formatted_word}\b", ssml_text, re.IGNORECASE):
@@ -84,7 +64,7 @@ class RUAccentModified(ruaccent.RUAccent):
 
 	def process_all_ssml(self, ssml_text: str) -> str:
 		processed_text = self.process_all(SSMLBuilder.extract_only_text(ssml_text))
-		processed_words = [word for word in self.split_by_words(processed_text) if RUAccentModified.has_word_accent(word)]
+		processed_words = [word for word in TextPreprocessor.split_by_words(processed_text)[0] if "+" in word]
 
 		if os.getenv("DEBUG", "0") == "1":
 			print(f"[DEBUG]: {' '.join(processed_words)}")

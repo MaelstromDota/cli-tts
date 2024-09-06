@@ -96,14 +96,14 @@ bind_say = input("Bind mode <0>/<1>: ")
 
 while True:
 	txt = input(">>> ")
-	if re.search(r"^.p \-?\d+$", txt, re.IGNORECASE) is not None:
-		pitch = int(re.search(r"\-?\d+", txt).group())
-	elif re.search(r"^.s .+$", txt, re.IGNORECASE) is not None:
-		speaker = txt[3:]
-	elif re.search(r"^.v \-?\d+$", txt, re.IGNORECASE) is not None:
-		volume = int(re.search(r"\-?\d+", txt).group())
-	elif re.search(r"^.b (0|1)$", txt, re.IGNORECASE) is not None:
-		bind_say = re.search(r"0|1", txt).group()
+	if match := re.search(r"^.p (\-?\d+)$", txt, re.IGNORECASE):
+		pitch = int(match.group(1))
+	elif match := re.search(r"^.s (.+)$", txt, re.IGNORECASE):
+		speaker = match.group(1)
+	elif match := re.search(r"^.v (\-?\d+)$", txt, re.IGNORECASE):
+		volume = int(match.group(1))
+	elif match := re.search(r"^.b (0|1)$", txt, re.IGNORECASE):
+		bind_say = match.group()
 	elif txt.startswith("!"):
 		os.system(txt[1:])
 	else:

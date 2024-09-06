@@ -1,5 +1,7 @@
 # test
 test/
+legacy.py
+legacy_simplified.py
 
 # trained models
 *.pt
