@@ -12,7 +12,7 @@ class TTS():
 		model_name = model.split("/")[-1]
 		if not os.path.isfile(model_name):
 			torch.hub.download_url_to_file(model, model_name)
-		self._model = torch.package.PackageImporter("model.pt").load_pickle("tts_models", "model")
+		self._model = torch.package.PackageImporter(model_name).load_pickle("tts_models", "model")
 		self._model.to(torch.device(device))
 		torch.set_num_threads(threads)
 

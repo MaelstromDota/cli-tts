@@ -1,5 +1,5 @@
-import re
 import os
+import re
 
 import ruaccent
 from ruaccent.text_preprocessor import TextPreprocessor
