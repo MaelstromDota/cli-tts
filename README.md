@@ -2,7 +2,7 @@
 
 python tool to output synthesized voice to your mic
 
-[![License: GNU GPLv3](https://img.shields.io/badge/License-GNU%20GPLv3-yellow.svg)](https://opensource.org/license/gpl-3-0/)
+[![License: CC BY-NC-SA](https://img.shields.io/badge/LICENSE-CC%20BY--NC--SA%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 
 ## Installation
